@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elevate — Module 1 Lesson 2</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+ --blue:#164e8a;
+ --blue2:#2563eb;
+ --green:#16a34a;
+ --yellow:#f59e0b;
+ --red:#dc2626;
+ --gray:#64748b;
+ --line:#b8c1cc;
+ --paper:#fff;
+ --bg:#eef2f7;
+}
+
+body{
+ margin:0;
+ background:var(--bg);
+ color:#111827;
+ font-family:Arial,Helvetica,sans-serif;
+}
+
+.toolbar{
+ position:sticky;
+ top:0;
+ z-index:100;
+ background:white;
+ border-bottom:1px solid #cbd5e1;
+ padding:10px;
+ display:flex;
+ justify-content:center;
+ gap:8px;
+ flex-wrap:wrap;
+}
+
+button{
+ border:1px solid #94a3b8;
+ background:white;
+ border-radius:7px;
+ padding:8px 12px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+button:hover{background:#f1f5f9}
+
+.primary{
+ background:var(--blue2);
+ color:white;
+ border-color:var(--blue2);
+}
+
+.done{
+ background:#15803d;
+ color:white;
+ border-color:#15803d;
+}
+
+.spell{
+ background:#7c3aed;
+ color:white;
+ border-color:#7c3aed;
+}
+
+.example{
+ background:#f59e0b;
+ color:white;
+ border-color:#f59e0b;
+}
+
+.export{
+ background:#0f766e;
+ color:white;
+ border-color:#0f766e;
+}
+
+#progressWrap{
+ max-width:900px;
+ margin:12px auto 0;
+ padding:0 15px;
+}
+
+#progress{
+ height:12px;
+ background:#dbe2ea;
+ border-radius:20px;
+ overflow:hidden;
+}
+
+#progressBar{
+ width:0%;
+ height:100%;
+ background:#16a34a;
+ transition:.3s;
+}
+
+#progressText{
+ text-align:center;
+ font-size:13px;
+ color:#475569;
+ margin-top:5px;
+}
+
+.sheet{
+ width:8.5in;
+ min-height:11in;
+ margin:22px auto;
+ background:white;
+ padding:.55in .65in;
+ box-shadow:0 3px 15px rgba(0,0,0,.12);
+ position:relative;
+}
+
+.logo{
+ font-size:28px;
+ font-weight:900;
+ color:#164e8a;
+ letter-spacing:-2px;
+ margin-bottom:12px;
+}
+
+h1{
+ font-size:22px;
+ margin:5px 0 14px;
+}
+
+h2{
+ font-size:17px;
+ margin:20px 0 8px;
+ text-decoration:underline;
+}
+
+h3{
+ font-size:15px;
+ margin:18px 0 8px;
+}
+
+.directions{
+ font-weight:bold;
+ margin:8px 0 14px;
+}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+ margin-bottom:20px;
+}
+
+th,td{
+ border:1px solid #333;
+ padding:7px;
+ font-size:13px;
+}
+
+th{
+ background:#f1f5f9;
+}
+
+.question{
+ margin:16px 0;
+ padding:12px;
+ border:1px solid transparent;
+ border-radius:8px;
+ transition:.2s;
+}
+
+.question.green{
+ background:#ecfdf3;
+ border-color:#86efac;
+}
+
+.question.yellow{
+ background:#fffbeb;
+ border-color:#facc15;
+}
+
+.qtop{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ align-items:flex-start;
+}
+
+.qnumber{
+ font-weight:bold;
+ flex:1;
+}
+
+.controls{
+ display:flex;
+ flex-wrap:wrap;
+ gap:5px;
+}
+
+.answer{
+ width:100%;
+ border:0;
+ border-bottom:1px solid #777;
+ padding:8px 3px;
+ font-size:15px;
+ outline:none;
+ background:transparent;
+}
+
+.answer:focus{
+ border-bottom:2px solid var(--blue2);
+}
+
+textarea.answer{
+ min-height:75px;
+ resize:vertical;
+ border:1px solid #cbd5e1;
+ border-radius:6px;
+ padding:9px;
+ background:white;
+}
+
+.status{
+ margin-top:8px;
+ font-weight:bold;
+ font-size:13px;
+}
+
+.hint{
+ display:none;
+ background:#fff7ed;
+ border-left:4px solid #f59e0b;
+ padding:10px;
+ margin-top:9px;
+ font-size:13px;
+}
+
+.study{
+ display:none;
+ background:#eff6ff;
+ border-left:4px solid #2563eb;
+ padding:10px;
+ margin-top:9px;
+ font-size:13px;
+}
+
+.green .status{color:#15803d}
+.yellow .status{color:#a16207}
+
+.choices{
+ margin-top:8px;
+ display:grid;
+ gap:4px;
+}
+
+.choice{
+ display:block;
+ padding:5px;
+ cursor:pointer;
+}
+
+.choice input{
+ margin-right:7px;
+}
+
+.cvc{
+ font-size:18px;
+ letter-spacing:2px;
+ font-weight:bold;
+}
+
+.vowels{
+ display:flex;
+ gap:14px;
+ margin-top:8px;
+}
+
+.vowels label{
+ cursor:pointer;
+}
+
+.passage{
+ border:1px solid #cbd5e1;
+ padding:16px;
+ line-height:1.65;
+ font-size:14px;
+}
+
+.sequence-row{
+ display:flex;
+ gap:8px;
+ align-items:center;
+ margin:14px 0;
+}
+
+.sequence-row input{
+ width:45px;
+ padding:7px;
+ border:1px solid #94a3b8;
+ border-radius:5px;
+ text-align:center;
+}
+
+.checklist{
+ margin:10px 0 20px;
+}
+
+.checklist label{
+ display:block;
+ margin:8px 0;
+}
+
+canvas{
+ width:100%;
+ height:180px;
+ border:1px solid #94a3b8;
+ background:
+ repeating-linear-gradient(
+  to bottom,
+  white 0,
+  white 31px,
+  #e2e8f0 32px
+ );
+ touch-action:none;
+}
+
+.board{
+ display:none;
+ margin-top:10px;
+}
+
+.wordhelper{
+ position:fixed;
+ inset:0;
+ background:rgba(15,23,42,.6);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ z-index:500;
+ padding:20px;
+}
+
+.wordbox{
+ width:min(560px,100%);
+ background:white;
+ border-radius:15px;
+ padding:22px;
+ box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+.wordbox h2{
+ text-decoration:none;
+ margin-top:0;
+}
+
+.mic{
+ width:80px;
+ height:80px;
+ border-radius:50%;
+ font-size:32px;
+ background:#ede9fe;
+ border:2px solid #7c3aed;
+}
+
+.mic.listening{
+ background:#fee2e2;
+ border-color:#dc2626;
+ animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+ 50%{transform:scale(1.08)}
+}
+
+/* CONTEXTUAL HELP */
+.helpButton{border:0;background:#e0f2fe;color:#0369a1;width:21px;height:21px;padding:0;border-radius:50%;font-size:13px;font-weight:bold;cursor:pointer;vertical-align:middle}
+.helpButton:hover{background:#bae6fd;transform:scale(1.08)}
+.helpWord{display:inline-flex;align-items:center;gap:4px}
+.helpModal{position:fixed;inset:0;background:rgba(15,23,42,.6);display:none;align-items:center;justify-content:center;z-index:600;padding:20px}
+.helpBox{width:min(620px,100%);max-height:90vh;overflow:auto;background:white;border-radius:16px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.35)}
+.helpHeader{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}
+.helpHeader h2{margin:0;color:#164e8a}
+.helpDefinition{background:#eff6ff;border-left:5px solid #2563eb;padding:13px;border-radius:7px;margin:15px 0;line-height:1.5}
+.helpExample{background:#f0fdf4;border-left:5px solid #16a34a;padding:13px;border-radius:7px;margin:15px 0;line-height:1.5}
+.helpPrompt{background:#fff7ed;border-left:5px solid #f59e0b;padding:13px;border-radius:7px;margin:15px 0;line-height:1.5}
+.helpActions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.helpAction{background:#2563eb;color:white;border-color:#2563eb}
+.hearButton{background:#7c3aed;color:white;border-color:#7c3aed}
+.helpIdeas{display:none;margin-top:15px;padding:13px;background:#faf5ff;border-left:5px solid #7c3aed;border-radius:7px}
+.helpBuilder{display:none;margin-top:15px;padding:15px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:9px}
+.builderSentence{font-size:17px;line-height:1.7;margin:10px 0}
+
+#spellResult{
+ margin-top:18px;
+ padding:15px;
+ background:#f8fafc;
+ border-radius:9px;
+ line-height:1.7;
+}
+
+footer{
+ text-align:center;
+ color:#64748b;
+ font-size:12px;
+ padding:30px;
+}
+
+@media(max-width:900px){
+ .sheet{
+  width:100%;
+  margin:10px 0;
+  padding:25px;
+  box-shadow:none;
+ }
+}
+
+@media print{
+ body{background:white}
+
+ .toolbar,
+ #progressWrap,
+ .controls,
+ .hint,
+ .study,
+ .wordhelper,
+ footer,
+ .board button{
+  display:none!important;
+ }
+
+ .sheet{
+  width:8.5in;
+  min-height:11in;
+  margin:0;
+  box-shadow:none;
+  page-break-after:always;
+ }
+
+ .question{
+  border:0!important;
+  background:white!important;
+ }
+
+ textarea.answer,
+ input.answer{
+  border:0;
+  border-bottom:1px solid #777;
+ }
+
+ .board{
+  display:block!important;
+ }
+
+ canvas{
+  border:0;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div class="toolbar">
+ <button class="export" onclick="exportPrintable()">📄 Export Printable</button>
+ <button onclick="window.print()">🖨 Print</button>
+ <button onclick="saveProgress()">💾 Save</button>
+ <button onclick="clearAnswers()">Clear Answers</button>
+ <button onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆ Top</button>
+</div>
+
+<div id="progressWrap">
+ <div id="progress">
+  <div id="progressBar"></div>
+ </div>
+ <div id="progressText">0 of 30 checked</div>
+</div>
+
+<!-- PAGE 1 -->
+<section class="sheet">
+
+<div class="logo">ELEVATE</div>
+
+<h1>Module 1: Observation &amp; Description</h1>
+
+<h3>Lesson 2: Language, Reading, &amp; Sentence Writing</h3>
+
+<table>
+<tr>
+<th>Word</th>
+<th>Part of Speech</th>
+<th>Student-Friendly Definition</th>
+</tr>
+<tr>
+<td>feature</td>
+<td>noun</td>
+<td>an important part of something</td>
+</tr>
+<tr>
+<td>texture</td>
+<td>noun</td>
+<td>how something feels when you touch it</td>
+</tr>
+<tr>
+<td>surface</td>
+<td>noun</td>
+<td>the outside or top layer of something</td>
+</tr>
+<tr>
+<td>outline</td>
+<td>noun</td>
+<td>the shape or edge of something</td>
+</tr>
+</table>
+
+<h2>Part 1: Word in a Sentence</h2>
+
+<div class="directions">
+Use each word to write a complete sentence.
+</div>
+
+<div id="part1"></div>
+
+<div style="text-align:right;margin-top:40px">Level 3</div>
+
+</section>
+
+<!-- PAGE 2 -->
+<section class="sheet">
+
+<h2>Part 2: Grammar &amp; Sentence Editing</h2>
+
+<div class="directions">
+Each sentence has a mistake. Rewrite the sentence correctly.
+</div>
+
+<div id="grammar"></div>
+
+<h2>Part 3: Phonics &amp; Word Knowledge</h2>
+
+<h3>A. Short Vowel Identification</h3>
+
+<div class="directions">
+Read each word out loud. Circle the short vowel sound you hear.
+</div>
+
+<div id="vowels"></div>
+
+<h3>B. Complete the CVC Words</h3>
+
+<div class="directions">
+Write the correct short vowel to complete each word.
+</div>
+
+<div id="cvc"></div>
+
+<div style="text-align:right;margin-top:40px">Level 3</div>
+
+</section>
+
+<!-- PAGE 3 -->
+<section class="sheet">
+
+<div class="directions">
+Read the passage below. Then answer the questions that follow.
+</div>
+
+<h1 style="text-align:center">Describing a Shell</h1>
+
+<div class="passage">
+
+<p>
+On the table sat a small shell. The shell had many interesting features.
+One feature was its curved outline, which looked like a spiral.
+</p>
+
+<p>
+The students touched the shell gently. They noticed the texture right away.
+Parts of the shell felt smooth, but other parts felt bumpy.
+</p>
+
+<p>
+The surface of the shell had light and dark lines. The lines went around
+the shell and helped show its shape. The students carefully described what
+they saw and felt.
+</p>
+
+<p>
+By observing the shell closely, the students learned how details help
+describe an object clearly.
+</p>
+
+</div>
+
+<h2>Part 4: Questions</h2>
+
+<div id="reading1"></div>
+
+<div style="text-align:right;margin-top:40px">Level 3</div>
+
+</section>
+
+<!-- PAGE 4 -->
+<section class="sheet">
+
+<div id="reading2"></div>
+
+<h2>Part 5: Sequencing</h2>
+
+<div class="directions">
+Number the events in the correct order. Write 1, 2, 3, or 4.
+</div>
+
+<div id="sequence"></div>
+
+<div style="text-align:right;margin-top:40px">Level 3</div>
+
+</section>
+
+<!-- PAGE 5 -->
+<section class="sheet">
+
+<h2>Part 6: Writing</h2>
+
+<p>
+<strong>Prompt:</strong>
+Choose one tool in a classroom
+(<em>a pencil sharpener, a heavy stapler, or the teacher's chair</em>).
+Explain what the tool is, who owns it, and how it is used.
+</p>
+
+<h3>Requirements:</h3>
+
+<div class="checklist">
+<label><input type="checkbox" id="req1"> Minimum of 5 complete sentences</label>
+<label><input type="checkbox" id="req2"> Include a clear topic sentence</label>
+<label><input type="checkbox" id="req3"> Use at least two possessive nouns to show ownership</label>
+<label><input type="checkbox" id="req4"> Use at least three adjectives to describe the tool</label>
+<label><input type="checkbox" id="req5"> Use at least two vocabulary words from this lesson</label>
+</div>
+
+<div class="question" id="writingQuestion">
+
+<div class="qtop">
+<div class="qnumber">Your response</div>
+
+<div class="controls">
+<button class="example" onclick="toggleHint('writingQuestion')">💡 Example</button>
+<button class="spell" onclick="openSpell()">🎙 Spell It</button>
+<button onclick="toggleBoard('writingBoard')">✍ Whiteboard</button>
+<button class="done" onclick="checkWriting()">DONE</button>
+</div>
+</div>
+
+<textarea
+ id="writingAnswer"
+ class="answer"
+ style="height:360px"
+ placeholder="Write your response here..."
+></textarea>
+
+<div id="writingBoard" class="board">
+<canvas></canvas>
+<button onclick="clearBoard('writingBoard')">Erase Board</button>
+</div>
+
+<div class="hint">
+<strong>Writing Guide:</strong>
+Start by naming the classroom tool.
+Then explain who owns it.
+Describe what it looks like using adjectives.
+Explain how it is used.
+Try to connect your ideas with complete sentences.
+</div>
+
+<div class="study">
+<strong>Study Guide:</strong>
+A strong paragraph has a topic sentence, supporting details,
+descriptive words, correct possessive nouns, and vocabulary from the lesson.
+Read your paragraph slowly and check each requirement before finishing.
+</div>
+
+<div class="status"></div>
+
+</div>
+
+<div style="text-align:right;margin-top:50px">Level 3</div>
+
+</section>
+
+
+<!-- CONTEXTUAL HELP LIBRARY -->
+<div class="helpModal" id="helpModal">
+ <div class="helpBox">
+  <div class="helpHeader">
+   <div>
+    <div style="font-size:13px;color:#64748b;font-weight:bold">HELP LIBRARY</div>
+    <h2 id="helpTitle">Word Help</h2>
+   </div>
+   <button onclick="closeHelp()">Close</button>
+  </div>
+  <div class="helpDefinition" id="helpDefinition"></div>
+  <div class="helpExample" id="helpExample"></div>
+  <div class="helpPrompt" id="helpPrompt"></div>
+  <div class="helpActions">
+   <button class="hearButton" onclick="hearHelpExample()">🔊 Hear an example</button>
+   <button class="helpAction" onclick="showBuildHelp()">🧩 Build It</button>
+   <button class="helpAction" onclick="showIdeaHelp()">🌟 I need ideas</button>
+  </div>
+  <div class="helpBuilder" id="helpBuilder"></div>
+  <div class="helpIdeas" id="helpIdeas"></div>
+ </div>
+</div>
+
+<!-- SPELL ASSISTANT -->
+
+<div class="wordhelper" id="spellModal">
+
+<div class="wordbox">
+
+<div style="display:flex;justify-content:space-between">
+<h2>🎙 Spell Assistant</h2>
+<button onclick="closeSpell()">Close</button>
+</div>
+
+<p>
+Say the word you need help spelling.
+I will help you <strong>hear the sounds and chunks</strong>
+without simply giving you the spelling.
+</p>
+
+<div style="text-align:center">
+
+<button class="mic" id="micButton" onclick="listenForWord()">🎙</button>
+
+<p id="micStatus">Click the microphone and say one word.</p>
+
+</div>
+
+<div id="spellResult">
+Your sound guide will appear here.
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+const HELP_LIBRARY={
+ adjective:{
+  title:"Adjective",
+  definition:"An adjective is a word that describes a person, place, animal, or thing.",
+  examples:["The <strong>small</strong> shell has a smooth surface.","The shell has a <strong>curved</strong> outline.","The <strong>rough</strong> rock feels bumpy."],
+  prompt:"Ask yourself: What does it look, feel, sound, smell, or seem like?",
+  builder:"The __________ object has a __________ surface.",
+  ideas:"Try describing size, color, shape, texture, weight, or age."
+ },
+ noun:{
+  title:"Noun",
+  definition:"A noun is a person, place, animal, or thing.",
+  examples:["The <strong>pencil</strong> has a smooth surface.","The <strong>teacher</strong> owns the chair.","The <strong>shell</strong> has an interesting feature."],
+  prompt:"Ask yourself: Who or what am I talking about?",
+  builder:"The __________ has __________.",
+  ideas:"Think of a person, place, animal, or thing."
+ },
+ possessive:{
+  title:"Possessive Noun",
+  definition:"A possessive noun shows who or what something belongs to. Look for <strong>'s</strong>.",
+  examples:["The <strong>teacher's</strong> chair has a smooth surface.","The <strong>student's</strong> pencil is on the desk.","The <strong>dog's</strong> toy is colorful."],
+  prompt:"Ask yourself: Who does it belong to?",
+  builder:"The __________'s __________ is __________.",
+  ideas:"Think of something that belongs to someone or something."
+ },
+ feature:{
+  title:"Feature",
+  definition:"A feature is an important part or characteristic of something.",
+  examples:["A feature of the shell is its <strong>curved outline</strong>.","One feature of the pencil is its sharp tip."],
+  prompt:"Ask yourself: What is one interesting or important part of this thing?",
+  builder:"One feature of the __________ is its __________.",
+  ideas:"Think about an interesting part: shape, color, handle, button, tip, edge, pattern, or size."
+ },
+ texture:{
+  title:"Texture",
+  definition:"Texture describes how something feels when you touch it.",
+  examples:["The shell has a <strong>smooth</strong> texture.","The rock has a <strong>rough</strong> texture.","The ball has a <strong>bumpy</strong> texture."],
+  prompt:"Ask yourself: How does it feel when I touch it?",
+  builder:"The __________ has a __________ texture.",
+  ideas:"Try smooth, rough, soft, hard, bumpy, slippery, fuzzy, or sticky."
+ },
+ surface:{
+  title:"Surface",
+  definition:"A surface is the outside or top layer of something.",
+  examples:["The shell's <strong>surface</strong> has light and dark lines.","The table has a smooth <strong>surface</strong>."],
+  prompt:"Ask yourself: What is the outside or top layer of the object?",
+  builder:"The surface of the __________ is __________.",
+  ideas:"Describe the surface with words like smooth, rough, shiny, flat, bumpy, or colorful."
+ },
+ outline:{
+  title:"Outline",
+  definition:"An outline is the shape or edge you can see around something.",
+  examples:["The shell has a curved <strong>outline</strong>.","I can see the outline of the leaf."],
+  prompt:"Ask yourself: What shape or edge can I see around it?",
+  builder:"The __________ has a __________ outline.",
+  ideas:"Try curved, straight, round, jagged, long, or wavy."
+ }
+};
+
+let currentHelpTerm="";
+
+function openHelp(term){
+ const data=HELP_LIBRARY[term];
+ if(!data)return;
+ currentHelpTerm=term;
+ document.getElementById("helpTitle").textContent=data.title;
+ document.getElementById("helpDefinition").innerHTML="<strong>❓ Reminder</strong><br><br>"+data.definition;
+ document.getElementById("helpExample").innerHTML="<strong>💡 Example</strong><br><br>"+data.examples.join("<br><br>");
+ document.getElementById("helpPrompt").innerHTML="<strong>🧠 Think about it</strong><br><br>"+data.prompt;
+ document.getElementById("helpBuilder").style.display="none";
+ document.getElementById("helpIdeas").style.display="none";
+ document.getElementById("helpModal").style.display="flex";
+}
+
+function closeHelp(){
+ document.getElementById("helpModal").style.display="none";
+}
+
+function showBuildHelp(){
+ const data=HELP_LIBRARY[currentHelpTerm];
+ if(!data)return;
+ const box=document.getElementById("helpBuilder");
+ box.innerHTML="<strong>🧩 Build It</strong><div class='builderSentence'>"+data.builder+"</div><small>Fill in the blanks with your own words. Your answer does not have to match the example exactly.</small>";
+ box.style.display="block";
+ document.getElementById("helpIdeas").style.display="none";
+}
+
+function showIdeaHelp(){
+ const data=HELP_LIBRARY[currentHelpTerm];
+ if(!data)return;
+ const box=document.getElementById("helpIdeas");
+ box.innerHTML="<strong>🌟 Ideas</strong><br><br>"+data.ideas;
+ box.style.display="block";
+ document.getElementById("helpBuilder").style.display="none";
+}
+
+function hearHelpExample(){
+ const data=HELP_LIBRARY[currentHelpTerm];
+ if(!data||!window.speechSynthesis)return;
+ const text=document.createElement("div");
+ text.innerHTML=data.examples[0];
+ const utterance=new SpeechSynthesisUtterance(text.textContent);
+ utterance.rate=.9;
+ speechSynthesis.cancel();
+ speechSynthesis.speak(utterance);
+}
+
+function helpButton(term){
+ return "<button type='button' class='helpButton' title='Get help with "+term+"' onclick=\"openHelp('"+term+"')\">?</button>";
+}
+
+function helpWord(term,label){
+ return "<span class='helpWord'><strong>"+label+"</strong>"+helpButton(term)+"</span>";
+}
+
+/* Automatically add ? help buttons wherever these terms appear */
+function installContextHelp(){
+ const terms=[
+  ["possessive nouns","possessive"],
+  ["possessive noun","possessive"],
+  ["adjectives","adjective"],
+  ["adjective","adjective"],
+  ["nouns","noun"],
+  ["noun","noun"],
+  ["features","feature"],
+  ["feature","feature"],
+  ["textures","texture"],
+  ["texture","texture"],
+  ["surfaces","surface"],
+  ["surface","surface"],
+  ["outlines","outline"],
+  ["outline","outline"]
+ ];
+
+ const root=document.querySelector(".sheet");
+ if(!root)return;
+
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+ const nodes=[];
+ let node;
+ while(node=walker.nextNode()){
+  const parent=node.parentElement;
+  if(!parent)continue;
+  if(parent.closest("button,input,textarea,script,style,.helpModal,.controls,.board"))continue;
+  if(!node.nodeValue.trim())continue;
+  nodes.push(node);
+ }
+
+ const escaped=terms.map(x=>x[0].replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));
+ const re=new RegExp("\\b("+escaped.join("|")+")\\b","gi");
+
+ nodes.forEach(n=>{
+  const text=n.nodeValue;
+  if(!re.test(text))return;
+  re.lastIndex=0;
+
+  const frag=document.createDocumentFragment();
+  let last=0,m;
+
+  while(m=re.exec(text)){
+   if(m.index>last)frag.appendChild(document.createTextNode(text.slice(last,m.index)));
+   const found=m[0];
+   const match=terms.find(x=>x[0].toLowerCase()===found.toLowerCase());
+   const span=document.createElement("span");
+   span.className="helpWord";
+   const strong=document.createElement("strong");
+   strong.textContent=found;
+   const btn=document.createElement("button");
+   btn.type="button";
+   btn.className="helpButton";
+   btn.title="Get help with "+found;
+   btn.textContent="?";
+   btn.onclick=()=>openHelp(match[1]);
+   span.appendChild(strong);
+   span.appendChild(btn);
+   frag.appendChild(span);
+   last=m.index+found.length;
+  }
+
+  if(last<text.length)frag.appendChild(document.createTextNode(text.slice(last)));
+  n.parentNode.replaceChild(frag,n);
+ });
+}
+
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape")closeHelp();
+});
+
+const problems=[];
+
+function makeQuestion(id,title,html,answer,hint,study,type="text"){
+ return `
+ <div class="question" id="${id}" data-answer="${answer}" data-type="${type}">
+  <div class="qtop">
+   <div class="qnumber">${title}</div>
+   <div class="controls">
+    <button class="example" onclick="toggleHint('${id}')">💡 Example</button>
+    <button class="spell" onclick="openSpell()">🎙 Spell It</button>
+    <button onclick="toggleBoard('${id}Board')">✍ Whiteboard</button>
+    <button class="done" onclick="checkQuestion('${id}')">DONE</button>
+   </div>
+  </div>
+
+  ${html}
+
+  <div id="${id}Board" class="board">
+   <canvas></canvas>
+   <button onclick="clearBoard('${id}Board')">Erase Board</button>
+  </div>
+
+  <div class="hint">
+   <strong>Hint:</strong> ${hint}
+  </div>
+
+  <div class="study">
+   <strong>Study Guide:</strong> ${study}
+  </div>
+
+  <div class="status"></div>
+ </div>
+ `;
+}
+
+
+/* PART 1 */
+
+const part1Words=[
+ ["feature",
+  "Think about an important part or characteristic of an object.",
+  "A complete sentence needs a subject and a complete idea."
+ ],
+ ["texture",
+  "Think about how an object feels when you touch it.",
+  "Texture describes how something feels."
+ ],
+ ["surface",
+  "Think about the outside or top layer of something.",
+  "Surface is a noun that names the outside or top layer."
+ ],
+ ["outline",
+  "Think about the shape or edge you can see around something.",
+  "An outline describes the outside shape or edge."
+ ]
+];
+
+document.getElementById("part1").innerHTML=
+part1Words.map((x,i)=>makeQuestion(
+ "p1_"+i,
+ (i+1)+". "+x[0],
+ `<textarea class="answer" placeholder="Write a complete sentence using ${x[0]}..."></textarea>`,
+ x[0],
+ x[1],
+ x[2],
+ "sentence"
+)).join("");
+
+
+/* GRAMMAR */
+
+const grammar=[
+ {
+ id:"g1",
+ title:"1. the rok has smooth surfac",
+ answer:"the rock has a smooth surface",
+ hint:"Look for spelling mistakes, missing words, and capitalization. Ask yourself what kind of word should come before smooth.",
+ study:"Check the beginning of every sentence. Then check nouns and articles such as a or the."
+ },
+ {
+ id:"g2",
+ title:"2. I c the outline of leaf",
+ answer:"i see the outline of a leaf",
+ hint:"The short letter c is being used in place of a whole word. Also look carefully at the phrase before leaf.",
+ study:"Read the sentence aloud. If a sentence sounds incomplete, look for a missing word."
+ },
+ {
+ id:"g3",
+ title:"3. textur tells how something fells",
+ answer:"texture tells how something feels",
+ hint:"There are two vocabulary/spelling mistakes. Read the sentence slowly and listen to each word.",
+ study:"When checking spelling, say the word slowly and listen for every sound."
+ },
+ {
+ id:"g4",
+ title:"4. A feature of the shell are a lines",
+ answer:"a feature of the shell is a line",
+ hint:"Look at whether the sentence is describing one feature or several. Then check whether the verb agrees.",
+ study:"Singular subjects usually take singular verbs. Check is/are and line/lines."
+ }
+];
+
+document.getElementById("grammar").innerHTML=
+grammar.map(g=>makeQuestion(
+ g.id,
+ g.title,
+ `<textarea class="answer" placeholder="Rewrite the sentence correctly..."></textarea>`,
+ g.answer,
+ g.hint,
+ g.study
+)).join("");
+
+
+/* VOWELS */
+
+const vowelWords=[
+ ["rock","o"],
+ ["net","e"],
+ ["lip","i"],
+ ["sun","u"],
+ ["bag","a"]
+];
+
+document.getElementById("vowels").innerHTML=
+vowelWords.map((v,i)=>makeQuestion(
+ "v"+i,
+ v[0],
+ `<div class="vowels">
+  ${["a","e","i","o","u"].map(x=>
+   `<label><input type="radio" name="v${i}" value="${x}"> ${x}</label>`
+  ).join("")}
+ </div>`,
+ v[1],
+ "Say the word slowly. Listen to the vowel sound in the middle.",
+ "Short vowels are often heard clearly in the middle of short CVC words."
+)).join("");
+
+
+/* CVC */
+
+const cvc=[
+ ["r__ck","o"],
+ ["n__t","e"],
+ ["l__p","i"],
+ ["s__n","u"],
+ ["b__g","a"]
+];
+
+document.getElementById("cvc").innerHTML=
+cvc.map((x,i)=>makeQuestion(
+ "c"+i,
+ x[0],
+ `<input class="answer" maxlength="1" placeholder="vowel">`,
+ x[1],
+ "Say the completed word slowly. Listen for the middle vowel.",
+ "A CVC word has a consonant-vowel-consonant pattern. Listen for the short vowel in the middle."
+)).join("");
+
+
+/* READING QUESTIONS */
+
+const reading=[
+ ["r1","1. What object are the students describing?",
+ ["A. A leaf","B. A shell","C. A rock","D. A book"],"b",
+ "Go back to the first sentence of the passage.",
+ "Good readers return to the text instead of guessing."
+ ],
+ ["r2","2. Which feature of the shell is mentioned first?",
+ ["A. Its color","B. Its size","C. Its outline","D. Its weight"],"c",
+ "Look at the first paragraph. Find the sentence beginning with 'One feature...'.",
+ "When a question asks what was mentioned first, look for the earliest detail in the passage."
+ ],
+ ["r3","3. What does the word texture help describe?",
+ ["A. How something looks","B. How something sounds","C. How something feels","D. How something smells"],"c",
+ "Look at the second paragraph. Think about what the students noticed when they touched the shell.",
+ "Texture describes how something feels when touched."
+ ],
+ ["r4","4. What do the lines on the shell's surface help show?",
+ ["A. The shell's smell","B. The shell's outline","C. The shell's sound","D. The shell's age"],"b",
+ "Find the sentence about the light and dark lines.",
+ "Look for a sentence that directly explains what the lines show."
+ ],
+ ["r5","5. Why do students observe objects closely?",
+ ["A. To finish quickly","B. To guess information","C. To describe objects clearly","D. To avoid writing"],"c",
+ "Read the final sentence of the passage.",
+ "A why question asks for the purpose or reason."
+ ],
+ ["r6","6. Which sentence uses the word 'feature' correctly?",
+ ["A. The feature feels rough.","B. A feature of the shell is its shape.","C. I feature the shell.","D. Feature are important."],"b",
+ "Remember what feature means: an important part of something.",
+ "A noun should be used as the name of an important part or characteristic."
+ ]
+];
+
+function readingHTML(q){
+ return `
+ <div class="choices">
+ ${q[2].map((x,i)=>
+ `<label class="choice">
+  <input type="radio" name="${q[0]}" value="${String.fromCharCode(97+i)}">
+  ${x}
+ </label>`).join("")}
+ </div>
+ `;
+}
+
+document.getElementById("reading1").innerHTML=
+reading.slice(0,2).map(q=>makeQuestion(
+ q[0],q[1],readingHTML(q),q[3],q[4],q[5],"radio"
+)).join("");
+
+document.getElementById("reading2").innerHTML=
+reading.slice(2).map(q=>makeQuestion(
+ q[0],q[1],readingHTML(q),q[3],q[4],q[5],"radio"
+)).join("");
+
+
+/* SEQUENCING */
+
+const sequence=[
+ ["s1","Students notice the shell's texture.",2],
+ ["s2","Students observe a shell on the table.",1],
+ ["s3","Students describe the shell's features.",4],
+ ["s4","Students look at the shell's surface and outline.",3]
+];
+
+document.getElementById("sequence").innerHTML=
+sequence.map(x=>makeQuestion(
+ x[0],
+ `<input class="sequenceInput answer" data-sequence="${x[0]}" maxlength="1" inputmode="numeric"> ${x[1]}`,
+ "",
+ String(x[2]),
+ "Think about what happens first, next, and last in the passage.",
+ "Sequence means putting events in the order they happened."
+)).join("");
+
+
+/* CHECKING */
+
+function normalize(text){
+ return text
+  .toLowerCase()
+  .replace(/[“”"']/g,"")
+  .replace(/[.,!?;:]/g,"")
+  .replace(/\s+/g," ")
+  .trim();
+}
+
+function checkQuestion(id){
+
+ const q=document.getElementById(id);
+ const type=q.dataset.type;
+ const expected=q.dataset.answer.toLowerCase();
+ let correct=false;
+
+ if(type==="radio"){
+  const selected=q.querySelector("input[type=radio]:checked");
+  if(selected) correct=selected.value===expected;
+ }
+
+ else{
+  const input=q.querySelector(".answer");
+  const value=normalize(input ? input.value : "");
+  
+  if(type==="sentence"){
+   const words=value.split(" ").filter(Boolean);
+   const hasWord=value.includes(expected);
+   const complete=words.length>=4;
+   correct=hasWord && complete;
+  }
+
+  else{
+   correct=value===normalize(expected);
+  }
+ }
+
+ setResult(q,correct);
+ saveProgress();
+}
+
+
+function setResult(q,correct){
+
+ q.classList.remove("green","yellow");
+
+ const status=q.querySelector(".status");
+ const hint=q.querySelector(".hint");
+ const study=q.querySelector(".study");
+
+ if(correct){
+
+  q.classList.add("green");
+
+  status.textContent="✓ DONE — Nice work!";
+
+  hint.style.display="none";
+  study.style.display="none";
+
+ }else{
+
+  q.classList.add("yellow");
+
+  status.textContent="↺ Not quite yet — use the help below and try again.";
+
+  hint.style.display="block";
+  study.style.display="block";
+ }
+
+ updateProgress();
+}
+
+
+/* WRITING CHECKER */
+
+function checkWriting(){
+
+ const q=document.getElementById("writingQuestion");
+ const text=document.getElementById("writingAnswer").value.trim().toLowerCase();
+
+ const sentences=(text.match(/[.!?]+/g)||[]).length;
+
+ const possessives=(text.match(/[a-z]+['’]s/g)||[]).length;
+
+ const adjectives=[
+  "big","small","large","little","heavy","light","sharp",
+  "smooth","rough","hard","soft","metal","wooden",
+  "plastic","old","new","long","short","thick","thin",
+  "useful","strong","bright"
+ ];
+
+ let adjectiveCount=0;
+
+ adjectives.forEach(a=>{
+  if(new RegExp("\\b"+a+"\\b").test(text))
+   adjectiveCount++;
+ });
+
+ const vocab=[
+  "feature","texture","surface","outline"
+ ];
+
+ let vocabCount=0;
+
+ vocab.forEach(v=>{
+  if(new RegExp("\\b"+v+"\\b").test(text))
+   vocabCount++;
+ });
+
+ const good=
+  sentences>=5 &&
+  possessives>=2 &&
+  adjectiveCount>=3 &&
+  vocabCount>=2 &&
+  text.length>30;
+
+ setResult(q,good);
+
+ if(!good){
+  document.querySelector("#writingQuestion .hint").innerHTML=
+  `<strong>Writing Help:</strong>
+   You have the right idea. Check the requirements one at a time:
+   <br>• 5 complete sentences
+   <br>• topic sentence
+   <br>• 2 possessive nouns
+   <br>• 3 adjectives
+   <br>• 2 vocabulary words`;
+ }
+
+ saveProgress();
+}
+
+
+/* HINT BUTTON */
+
+function toggleHint(id){
+
+ const q=document.getElementById(id);
+
+ const hint=q.querySelector(".hint");
+
+ hint.style.display=
+  hint.style.display==="block" ? "none" : "block";
+}
+
+
+/* WHITEBOARD */
+
+function toggleBoard(id){
+
+ const board=document.getElementById(id);
+
+ if(!board)return;
+
+ board.style.display=
+  board.style.display==="block" ? "none" : "block";
+
+ if(board.style.display==="block")
+  setupCanvas(board.querySelector("canvas"));
+}
+
+function setupCanvas(canvas){
+
+ if(canvas.dataset.ready)return;
+
+ canvas.dataset.ready="1";
+
+ const ctx=canvas.getContext("2d");
+
+ function resize(){
+
+  const rect=canvas.getBoundingClientRect();
+  const dpr=window.devicePixelRatio||1;
+
+  canvas.width=rect.width*dpr;
+  canvas.height=rect.height*dpr;
+
+  ctx.scale(dpr,dpr);
+
+  ctx.lineWidth=3;
+  ctx.lineCap="round";
+  ctx.lineJoin="round";
+ }
+
+ resize();
+
+ let drawing=false;
+
+ function point(e){
+
+  const r=canvas.getBoundingClientRect();
+
+  return {
+   x:e.clientX-r.left,
+   y:e.clientY-r.top
+  };
+ }
+
+ canvas.addEventListener("pointerdown",e=>{
+
+  drawing=true;
+
+  canvas.setPointerCapture(e.pointerId);
+
+  const p=point(e);
+
+  ctx.beginPath();
+  ctx.moveTo(p.x,p.y);
+ });
+
+ canvas.addEventListener("pointermove",e=>{
+
+  if(!drawing)return;
+
+  const p=point(e);
+
+  ctx.lineTo(p.x,p.y);
+  ctx.stroke();
+ });
+
+ canvas.addEventListener("pointerup",()=>drawing=false);
+ canvas.addEventListener("pointercancel",()=>drawing=false);
+}
+
+
+function clearBoard(id){
+
+ const board=document.getElementById(id);
+
+ const canvas=board.querySelector("canvas");
+
+ const ctx=canvas.getContext("2d");
+
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+
+/* PROGRESS */
+
+function updateProgress(){
+
+ const qs=[...document.querySelectorAll(".question")];
+
+ const completed=qs.filter(q=>
+  q.classList.contains("green")
+ ).length;
+
+ const pct=Math.round(completed/qs.length*100);
+
+ document.getElementById("progressBar").style.width=pct+"%";
+
+ document.getElementById("progressText").textContent=
+  completed+" of "+qs.length+" checked • "+pct+"% complete";
+}
+
+
+/* SAVE */
+
+function saveProgress(){
+
+ const data={};
+
+ document.querySelectorAll("input,textarea").forEach((el,i)=>{
+
+  const key=el.id || el.name || "field_"+i;
+
+  if(el.type==="radio" || el.type==="checkbox")
+   data[key]=el.checked;
+  else
+   data[key]=el.value;
+ });
+
+ data.status={};
+
+ document.querySelectorAll(".question").forEach(q=>{
+  data.status[q.id]=q.className;
+ });
+
+ localStorage.setItem(
+  "elevate_module1_lesson2",
+  JSON.stringify(data)
+ );
+}
+
+
+function restoreProgress(){
+
+ const raw=localStorage.getItem(
+  "elevate_module1_lesson2"
+ );
+
+ if(!raw)return;
+
+ try{
+
+  const data=JSON.parse(raw);
+
+  document.querySelectorAll("input,textarea").forEach((el,i)=>{
+
+   const key=el.id || el.name || "field_"+i;
+
+   if(data[key]!==undefined){
+
+    if(el.type==="radio" || el.type==="checkbox")
+     el.checked=data[key];
+
+    else
+     el.value=data[key];
+   }
+  });
+
+  Object.keys(data.status||{}).forEach(id=>{
+
+   const q=document.getElementById(id);
+
+   if(q){
+    if(data.status[id].includes("green"))
+     q.classList.add("green");
+
+    if(data.status[id].includes("yellow"))
+     q.classList.add("yellow");
+
+    if(q.classList.contains("green"))
+     q.querySelector(".status").textContent="✓ DONE — Nice work!";
+
+    if(q.classList.contains("yellow")){
+     q.querySelector(".status").textContent=
+      "↺ Not quite yet — use the help below and try again.";
+     q.querySelector(".hint").style.display="block";
+     q.querySelector(".study").style.display="block";
+    }
+   }
+  });
+
+  updateProgress();
+
+ }catch(e){}
+}
+
+
+function clearAnswers(){
+
+ if(!confirm("Clear all student answers and progress?"))
+  return;
+
+ localStorage.removeItem("elevate_module1_lesson2");
+
+ location.reload();
+}
+
+
+/* SPELL ASSISTANT */
+
+function openSpell(){
+
+ document.getElementById("spellModal").style.display="flex";
+
+ document.getElementById("spellResult").innerHTML=
+  "Click the microphone and say one word.";
+
+}
+
+function closeSpell(){
+
+ document.getElementById("spellModal").style.display="none";
+
+}
+
+
+const SpeechRecognition=
+ window.SpeechRecognition ||
+ window.webkitSpeechRecognition;
+
+
+function listenForWord(){
+
+ if(!SpeechRecognition){
+
+  document.getElementById("micStatus").textContent=
+   "Voice recognition is not supported by this browser. Try Chrome or Edge.";
+
+  return;
+ }
+
+ const rec=new SpeechRecognition();
+
+ rec.lang="en-US";
+
+ rec.interimResults=false;
+
+ rec.maxAlternatives=1;
+
+ const button=document.getElementById("micButton");
+
+ button.classList.add("listening");
+
+ document.getElementById("micStatus").textContent=
+  "Listening... say one word.";
+
+ rec.onresult=e=>{
+
+  const spoken=
+   e.results[0][0].transcript
+    .trim()
+    .split(/\s+/)[0];
+
+  giveSoundHelp(spoken);
+
+ };
+
+ rec.onerror=()=>{
+
+  document.getElementById("micStatus").textContent=
+   "I couldn't hear that. Try again.";
+
+ };
+
+ rec.onend=()=>{
+
+  button.classList.remove("listening");
+
+ };
+
+ rec.start();
+}
+
+
+/*
+ IMPORTANT:
+ The spelling assistant deliberately does NOT show
+ the target word's correct spelling back to the student.
+ It teaches sound patterns instead.
+*/
+
+function giveSoundHelp(word){
+
+ const lower=word.toLowerCase();
+
+ let help=[];
+
+ const syllables=estimateSyllables(lower);
+
+ help.push(
+  "<strong>Listen for the chunks:</strong><br>"+
+  syllables.join(" • ")
+ );
+
+ if(lower.endsWith("ing"))
+  help.push(
+   "Listen for a base word followed by an <strong>-ing ending</strong>. Say the base word first, then add the ending sound."
+  );
+
+ if(lower.endsWith("ed"))
+  help.push(
+   "Listen carefully to the <strong>-ed ending</strong>. It can sound like /t/, /d/, or /id/."
+  );
+
+ if(lower.endsWith("s"))
+  help.push(
+   "Check whether the word needs a plural or ending sound. Listen for the final /s/ sound."
+  );
+
+ if(lower.endsWith("es"))
+  help.push(
+   "Listen for the extra syllable or ending sound. Some words need an <strong>-es</strong> ending."
+  );
+
+ if(lower.includes("ch"))
+  help.push(
+   "Listen for the <strong>ch</strong> sound. Stretch the beginning or middle of the word and hear that sound."
+  );
+
+ if(lower.includes("sh"))
+  help.push(
+   "Listen for the <strong>sh</strong> sound. Hold the sound for a moment: /sh/."
+  );
+
+ if(lower.includes("ou"))
+  help.push(
+   "Listen carefully to the vowel sound. Some words use a vowel team that produces the sound you hear."
+  );
+
+ if(lower.endsWith("tion"))
+  help.push(
+   "Listen for the ending that sounds like <strong>shun</strong>. Break the word into the part before the ending and the ending sound."
+  );
+
+ if(lower.endsWith("e"))
+  help.push(
+   "Check whether the final sound is silent. A silent final e can change the vowel sound earlier in the word."
+  );
+
+ help.push(
+  "<strong>Try this:</strong> Say the word slowly. Tap once for each syllable. Stretch each sound, then blend the sounds back together."
+ );
+
+ document.getElementById("spellResult").innerHTML=
+  help.map(x=>"• "+x).join("<br><br>");
+
+ document.getElementById("micStatus").textContent=
+  "Now listen to the word in chunks and try writing it yourself.";
+
+}
+
+
+function estimateSyllables(word){
+
+ const clean=word.replace(/[^a-z]/g,"");
+
+ if(clean.length<=3)return [clean];
+
+ let pieces=[];
+
+ let start=0;
+
+ const vowels="aeiouy";
+
+ for(let i=1;i<clean.length-1;i++){
+
+  if(
+   vowels.includes(clean[i-1]) &&
+   !vowels.includes(clean[i]) &&
+   vowels.includes(clean[i+1])
+  ){
+
+   pieces.push(clean.slice(start,i));
+
+   start=i;
+  }
+ }
+
+ pieces.push(clean.slice(start));
+
+ return pieces.filter(Boolean);
+}
+
+
+/* EXPORT PRINTABLE */
+
+function exportPrintable(){
+
+ /*
+  We create a temporary printable copy.
+  Answers are converted into visible text.
+  Buttons disappear.
+  Whiteboards become images.
+ */
+
+ const clone=document.body.cloneNode(true);
+
+ clone.querySelector(".toolbar")?.remove();
+
+ clone.querySelector("#progressWrap")?.remove();
+
+ clone.querySelector("#spellModal")?.remove();
+
+ clone.querySelectorAll(".controls").forEach(x=>x.remove());
+
+ clone.querySelectorAll(".hint,.study").forEach(x=>x.remove());
+
+ clone.querySelectorAll("textarea").forEach(area=>{
+
+  const div=document.createElement("div");
+
+  div.style.whiteSpace="pre-wrap";
+  div.style.minHeight=area.offsetHeight+"px";
+  div.style.borderBottom="1px solid #777";
+  div.style.padding="8px 3px";
+
+  div.textContent=area.value;
+
+  area.replaceWith(div);
+ });
+
+ clone.querySelectorAll("input[type=radio]").forEach(r=>{
+
+  const label=r.parentElement;
+
+  if(r.checked){
+
+   label.style.fontWeight="bold";
+
+   label.innerHTML=
+    "☑ "+label.textContent.trim();
+
+  }else{
+
+   label.innerHTML=
+    "☐ "+label.textContent.trim();
+
+  }
+ });
+
+ clone.querySelectorAll("input[type=checkbox]").forEach(c=>{
+
+  c.replaceWith(
+   document.createTextNode(c.checked ? "☑ " : "☐ ")
+  );
+
+ });
+
+ const printWindow=
+  window.open("","_blank");
+
+ if(!printWindow){
+
+  alert("Please allow pop-ups for this worksheet.");
+
+  return;
+ }
+
+ printWindow.document.write(`
+ <!DOCTYPE html>
+ <html>
+ <head>
+ <title>Elevate — Student Work</title>
+
+ <style>
+
+ body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:white;
+  color:#111;
+ }
+
+ .sheet{
+  width:8.5in;
+  min-height:11in;
+  margin:0 auto;
+  padding:.55in .65in;
+  page-break-after:always;
+ }
+
+ h1{font-size:22px}
+ h2{font-size:17px;text-decoration:underline}
+ table{width:100%;border-collapse:collapse}
+ th,td{border:1px solid #333;padding:7px}
+ .question{margin:15px 0}
+ .passage{border:1px solid #aaa;padding:15px;line-height:1.6}
+ canvas{max-width:100%}
+
+ @media print{
+  .sheet{page-break-after:always}
+ }
+
+ </style>
+
+ </head>
+
+ <body>
+ ${clone.querySelectorAll(".sheet")[0]?.outerHTML || ""}
+ ${clone.querySelectorAll(".sheet")[1]?.outerHTML || ""}
+ ${clone.querySelectorAll(".sheet")[2]?.outerHTML || ""}
+ ${clone.querySelectorAll(".sheet")[3]?.outerHTML || ""}
+ ${clone.querySelectorAll(".sheet")[4]?.outerHTML || ""}
+
+ <script>
+ window.onload=function(){
+  setTimeout(function(){
+   window.print();
+  },500);
+ };
+ <\/script>
+
+ </body>
+ </html>
+ `);
+
+ printWindow.document.close();
+}
+
+
+/* AUTO SAVE */
+
+document.addEventListener("input",saveProgress);
+
+document.addEventListener("change",saveProgress);
+
+window.addEventListener("beforeunload",saveProgress);
+
+installContextHelp();
+
+/* ELEVATE_SENTENCE_CHECKER_V2 */
+const ELEVATE_COMMON_VERBS = new Set([
+  "am","is","are","was","were","be","being","been",
+  "have","has","had","do","does","did",
+  "can","could","will","would","should","may","might",
+  "see","sees","saw","use","uses","used",
+  "make","makes","made","feel","feels","felt",
+  "look","looks","looked","describe","describes","described",
+  "show","shows","showed","own","owns","owned",
+  "contain","contains","contained","have","has",
+  "sit","sits","sitting","hold","holds","held",
+  "help","helps","helped","call","calls","called",
+  "like","likes","liked","move","moves","moved",
+  "write","writes","wrote","tell","tells","told"
+]);
+
+function elevateSentenceCheck(text){
+  const raw = (text || "").trim();
+  const result = {
+    empty: !raw,
+    capital: false,
+    punctuation: false,
+    words: 0,
+    verb: false,
+    complete: false,
+    messages: []
+  };
+
+  if (!raw) {
+    result.messages.push("Type your answer first.");
+    return result;
+  }
+
+  const words = raw.match(/[A-Za-zÀ-ÿ]+(?:['’][A-Za-zÀ-ÿ]+)?/g) || [];
+  result.words = words.length;
+  result.capital = /^[A-ZÀ-ÖØ-Þ]/.test(raw);
+  result.punctuation = /[.!?]["'’”»)]*$/.test(raw);
+
+  result.verb = words.some(w =>
+    ELEVATE_COMMON_VERBS.has(w.toLowerCase())
+  );
+
+  result.complete = result.words >= 4 && result.verb;
+
+  if (!result.capital)
+    result.messages.push("🔠 Start your sentence with a capital letter.");
+
+  if (!result.punctuation)
+    result.messages.push("🔵 Add punctuation at the end.");
+
+  if (result.words < 4)
+    result.messages.push("🧩 Add a few more words so you have a complete thought.");
+
+  if (result.words >= 4 && !result.verb)
+    result.messages.push("🧩 Make sure your sentence tells what someone or something does, is, has, or feels.");
+
+  return result;
+}
+
+function elevateShowSentenceFeedback(field){
+  if (!field) return;
+
+  let box = field.parentElement.querySelector(".elevateSentenceFeedback");
+
+  if (!box) {
+    box = document.createElement("div");
+    box.className = "elevateSentenceFeedback";
+    field.insertAdjacentElement("afterend", box);
+  }
+
+  const text = field.value || "";
+  const r = elevateSentenceCheck(text);
+
+  if (!text.trim()) {
+    box.innerHTML = "";
+    box.style.display = "none";
+    return;
+  }
+
+  box.style.display = "block";
+
+  if (r.capital && r.punctuation && r.complete) {
+    box.innerHTML = "✅ Great! This looks like a complete sentence.";
+    box.className = "elevateSentenceFeedback good";
+  } else {
+    box.innerHTML = r.messages.join("<br>");
+    box.className = "elevateSentenceFeedback needsFix";
+  }
+}
+
+function elevateInstallSentenceChecker(){
+  const fields = document.querySelectorAll(
+    '.sheet textarea, .sheet input[type="text"]'
+  );
+
+  fields.forEach(field => {
+    field.setAttribute("spellcheck", "true");
+    field.setAttribute("autocorrect", "on");
+
+    if (field.dataset.elevateSentenceAttached) return;
+    field.dataset.elevateSentenceAttached = "true";
+
+    field.addEventListener("input", () => {
+      elevateShowSentenceFeedback(field);
+    });
+
+    field.addEventListener("blur", () => {
+      elevateShowSentenceFeedback(field);
+    });
+  });
+
+  document.addEventListener("click", function(e){
+    const btn = e.target.closest("button");
+
+    if (!btn) return;
+    if (btn.textContent.trim().toUpperCase() !== "DONE") return;
+
+    setTimeout(() => {
+      const question = btn.closest(".question");
+      if (!question) return;
+
+      const field = question.querySelector(
+        'textarea, input[type="text"]'
+      );
+
+      if (field) elevateShowSentenceFeedback(field);
+    }, 100);
+  });
+}
+
+const elevateSentenceStyle = document.createElement("style");
+elevateSentenceStyle.textContent = `
+.elevateSentenceFeedback {
+  display:none;
+  margin-top:8px;
+  padding:9px 12px;
+  border-radius:10px;
+  font-size:14px;
+  line-height:1.45;
+  font-weight:600;
+}
+
+.elevateSentenceFeedback.good {
+  background:#e9f8ed;
+  color:#24743a;
+  border:1px solid #b9e4c3;
+}
+
+.elevateSentenceFeedback.needsFix {
+  background:#fff8e6;
+  color:#765800;
+  border:1px solid #f0d98a;
+}
+`;
+document.head.appendChild(elevateSentenceStyle);
+
+elevateInstallSentenceChecker();
+/* END ELEVATE_SENTENCE_CHECKER_V2 */
+
+
+/* ELEVATE_MOBILE_V1 */
+const elevateMobileStyle = document.createElement("style");
+elevateMobileStyle.textContent = `
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+textarea,
+input[type="text"] {
+  font-size: 16px !important;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.sheet {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.question {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+@media (max-width: 700px) {
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .toolbar button {
+    min-height: 42px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 14px 12px 40px;
+    border-radius: 0;
+    box-sizing: border-box;
+  }
+
+  .question {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 14px;
+    border-radius: 14px;
+    box-sizing: border-box;
+  }
+
+  .question textarea,
+  .question input[type="text"] {
+    width: 100% !important;
+    min-height: 52px;
+    padding: 12px;
+    font-size: 17px !important;
+    line-height: 1.45;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  .question button {
+    min-height: 44px;
+    padding: 9px 13px;
+    font-size: 15px;
+    margin: 4px 2px;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .controls button {
+    flex: 1 1 auto;
+  }
+
+  .wordbox {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .wordbox input {
+    width: 100% !important;
+  }
+
+  .hint,
+  .study {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .helpModal {
+    padding: 12px !important;
+  }
+
+  .helpModal .wordhelper {
+    width: calc(100vw - 24px) !important;
+    max-width: 520px !important;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 18px !important;
+  }
+
+  .helpModal button {
+    min-height: 44px;
+  }
+
+  canvas.board {
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+    touch-action: none;
+  }
+
+  .elevateSentenceFeedback {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 8px;
+  }
+
+  /* Make contextual ? buttons easy to tap */
+  .contextHelpBtn {
+    min-width: 32px;
+    min-height: 32px;
+    padding: 4px 8px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+
+  .sheet {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .question {
+    padding: 12px;
+  }
+
+  .toolbar {
+    justify-content: center;
+  }
+
+  .toolbar button {
+    font-size: 13px;
+    padding: 7px 9px;
+  }
+
+  h1 {
+    font-size: 25px !important;
+  }
+
+  h2 {
+    font-size: 21px !important;
+  }
+
+  h3 {
+    font-size: 18px !important;
+  }
+}
+`;
+document.head.appendChild(elevateMobileStyle);
+
+/* Prevent accidental zooming while keeping normal page accessibility. */
+document.addEventListener("touchstart", function(e) {
+  if (e.touches.length > 1) e.preventDefault();
+}, {passive:false});
+
+/* END ELEVATE_MOBILE_V1 */
+
+restoreProgress();
+
+updateProgress();
+
+</script>
+
+<footer>
+Elevate Interactive Worksheet • Module 1 • Lesson 2
+</footer>
+
+</body>
+</html>
